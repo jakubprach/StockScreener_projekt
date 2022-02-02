@@ -14,5 +14,6 @@ namespace StockScreener.Models
         public string StockIndex { get; set; }
         public double SharesQuantity { get; set; }
         public string UserName { get; set; }
+        public double WinLoss { get; set; }
     }
 }

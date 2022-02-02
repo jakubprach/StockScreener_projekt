@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StockScreener.Data;
 using StockScreener.Models;
+using YahooFinanceApi;
 
 namespace StockScreener.Controllers.Stock
 {
@@ -22,7 +23,16 @@ namespace StockScreener.Controllers.Stock
         // GET: StockPurchases
         public async Task<IActionResult> Index()
         {
+            
             string userName = HttpContext.User.Identity.Name;
+            foreach (var cos in _context.StockPurchase.Where(s => s.UserName == userName))
+            {
+                var securities = await Yahoo.Symbols(cos.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
+                var stock = securities[cos.StockIndex];
+                var price = (stock[Field.RegularMarketPrice] * cos.SharesQuantity) - (cos.SharesQuantity * cos.BoughtAt); // or, you could use aapl.RegularMarketPrice directly for typed-value
+                cos.WinLoss = price;
+            }
+          
             return View(await _context.StockPurchase.Where(s => s.UserName == userName)
                                       .ToListAsync());
         }
@@ -58,11 +68,18 @@ namespace StockScreener.Controllers.Stock
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BoughtAt,StockIndex,SharesQuantity,UserName")] StockPurchase stockPurchase)
         {
+            string userName = HttpContext.User.Identity.Name;
             if (ModelState.IsValid)
             {
-                _context.Add(stockPurchase);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var securities = await Yahoo.Symbols(stockPurchase.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
+                stockPurchase.UserName = userName;
+                stockPurchase.WinLoss = 0;
+                if (securities.ContainsKey(stockPurchase.StockIndex))
+                {
+                    _context.Add(stockPurchase);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(stockPurchase);
         }

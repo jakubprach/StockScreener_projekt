@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.SharesQuantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                Win/Loss
             </th>
             <th></th>
         </tr>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.SharesQuantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @Html.DisplayFor(modelItem => item.WinLoss)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
