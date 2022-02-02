@@ -22,7 +22,6 @@ namespace StockScreener.Controllers.Stock
         // GET: StockPurchases
         public async Task<IActionResult> Index()
         {
-            //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             string userName = HttpContext.User.Identity.Name;
             return View(await _context.StockPurchase.Where(s => s.UserName == userName)
                                       .ToListAsync());
