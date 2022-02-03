@@ -20,10 +20,15 @@ namespace StockScreener.Controllers.Stock
             _context = context;
         }
 
+        public IActionResult NotLoggedIn()
+        {
+            return View();
+        }
+
         // GET: StockPurchases
         public async Task<IActionResult> Index()
         {
-            
+            if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
             string userName = HttpContext.User.Identity.Name;
             foreach (var cos in _context.StockPurchase.Where(s => s.UserName == userName))
             {
@@ -40,6 +45,7 @@ namespace StockScreener.Controllers.Stock
         // GET: StockPurchases/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
             if (id == null)
             {
                 return NotFound();
@@ -58,6 +64,7 @@ namespace StockScreener.Controllers.Stock
         // GET: StockPurchases/Create
         public IActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
             return View();
         }
 
@@ -87,6 +94,7 @@ namespace StockScreener.Controllers.Stock
         // GET: StockPurchases/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
             if (id == null)
             {
                 return NotFound();
@@ -138,6 +146,7 @@ namespace StockScreener.Controllers.Stock
         // GET: StockPurchases/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
             if (id == null)
             {
                 return NotFound();
