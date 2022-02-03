@@ -7,7 +7,7 @@
     <h2 class="pb-2 border-bottom">What do you want to do?</h2>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
         <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient rounded" style="width:80px">
+            <div class="feature-icon bg-dark bg-gradient rounded position-relative top-0 start-50 translate-middle-x" style="width:80px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white" class="bi bi-collection m-3" viewBox="0 0 16 16">
                     <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z" />
                     <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
@@ -21,7 +21,7 @@
             </a>
         </div>
         <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient rounded" style="width:80px">
+            <div class="feature-icon bg-dark bg-gradient rounded position-relative top-0 start-50 translate-middle-x" style="width:80px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white" class="bi bi-collection m-3" viewBox="0 0 16 16">
                     <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z" />
                 </svg>
@@ -34,7 +34,7 @@
             </a>
         </div>
         <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient rounded" style="width:80px">
+            <div class="feature-icon bg-dark bg-gradient rounded position-relative top-0 start-50 translate-middle-x" style="width:80px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white" class="bi bi-person-circle m-3" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
@@ -42,7 +42,7 @@
             </div>
             <h3 class="m-1">Edit your profile!</h3>
             <p>Do not forget to change your password once in a while, security of your account is very important</p>
-            <a class="icon-link" asp-area="" asp-controller="Profile" asp-action="">
+            <a class="icon-link"  asp-area="Identity" asp-page="/Account/Manage/Index">
                 Change things up!
                 <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="blue" class="bi bi-chevron-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" /></svg>
             </a>
