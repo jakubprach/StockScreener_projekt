@@ -4,16 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Your portfolio</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add purchase</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BoughtAt)
+                @Html.DisplayNameFor(model => model.BoughtAt) ($)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StockIndex)
@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.SharesQuantity)
             </th>
             <th>
-                Win/Loss
+                Win/Loss (in $)
             </th>
             <th></th>
         </tr>
