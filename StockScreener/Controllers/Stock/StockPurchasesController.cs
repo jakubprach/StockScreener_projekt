@@ -25,6 +25,11 @@ namespace StockScreener.Controllers.Stock
             return View();
         }
 
+        public IActionResult IndexError()
+        {
+            return View();
+        }
+
         // GET: StockPurchases
         public async Task<IActionResult> Index()
         {
@@ -87,7 +92,7 @@ namespace StockScreener.Controllers.Stock
             }
             catch(Exception e)
             {
-                return NotFound();
+                return RedirectToAction("IndexError");
             }
             
             return View(stockPurchase);

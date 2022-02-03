@@ -24,11 +24,6 @@ namespace StockScreener.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var securities = await Yahoo.Symbols("AAPL").Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
-            var aapl = securities["AAPL"];
-            var price = aapl[Field.RegularMarketPrice]; // or, you could use aapl.RegularMarketPrice directly for typed-value
-
-            ViewBag.stock = price;
             return View();
         }
 
