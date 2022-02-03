@@ -73,7 +73,7 @@ namespace StockScreener.Controllers.Stock
         public async Task<IActionResult> Create([Bind("Id,BoughtAt,StockIndex,SharesQuantity,UserName")] StockPurchase stockPurchase)
         {
             string userName = HttpContext.User.Identity.Name;
-            if (ModelState.IsValid)
+            try
             {
                 var securities = await Yahoo.Symbols(stockPurchase.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
                 stockPurchase.UserName = userName;
@@ -85,6 +85,11 @@ namespace StockScreener.Controllers.Stock
                     return RedirectToAction(nameof(Index));
                 }
             }
+            catch(Exception e)
+            {
+                return NotFound();
+            }
+            
             return View(stockPurchase);
         }
 
