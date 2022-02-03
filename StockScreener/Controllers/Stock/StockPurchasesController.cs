@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -47,7 +48,7 @@ namespace StockScreener.Controllers.Stock
                                       .ToListAsync());
         }
 
-        // GET: StockPurchases/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
@@ -66,7 +67,6 @@ namespace StockScreener.Controllers.Stock
             return View(stockPurchase);
         }
 
-        // GET: StockPurchases/Create
         public IActionResult Create()
         {
             if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
@@ -83,12 +83,14 @@ namespace StockScreener.Controllers.Stock
                 var securities = await Yahoo.Symbols(stockPurchase.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
                 stockPurchase.UserName = userName;
                 stockPurchase.WinLoss = 0;
+                if (!TryValidateModel(stockPurchase)) { return RedirectToAction("NotLoggedIn"); }
+
                 if (securities.ContainsKey(stockPurchase.StockIndex))
-                {
-                    _context.Add(stockPurchase);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
+                    {          
+                        _context.Add(stockPurchase);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));                  
+                    }
             }
             catch(Exception e)
             {
@@ -98,7 +100,7 @@ namespace StockScreener.Controllers.Stock
             return View(stockPurchase);
         }
 
-        // GET: StockPurchases/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
@@ -147,7 +149,6 @@ namespace StockScreener.Controllers.Stock
             return View(stockPurchase);
         }
 
-        // GET: StockPurchases/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
@@ -166,7 +167,6 @@ namespace StockScreener.Controllers.Stock
             return View(stockPurchase);
         }
 
-        // POST: StockPurchases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
