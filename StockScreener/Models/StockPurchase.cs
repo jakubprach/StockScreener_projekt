@@ -10,10 +10,10 @@ namespace StockScreener.Models
     public class StockPurchase
     {
         public int Id { get; set; }
-        public double BoughtAt { get; set; }
+        public float BoughtAt { get; set; }
         public string StockIndex { get; set; }
-        public double SharesQuantity { get; set; }
+        public float SharesQuantity { get; set; }
         public string UserName { get; set; }
-        public double WinLoss { get; set; }
+        public float WinLoss { get; set; }
     }
 }

@@ -34,8 +34,8 @@ namespace StockScreener.Controllers.Stock
             {
                 var securities = await Yahoo.Symbols(cos.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
                 var stock = securities[cos.StockIndex];
-                var price = (stock[Field.RegularMarketPrice] * cos.SharesQuantity) - (cos.SharesQuantity * cos.BoughtAt); // or, you could use aapl.RegularMarketPrice directly for typed-value
-                cos.WinLoss = price;
+                var price = (stock[Field.RegularMarketPrice] * cos.SharesQuantity) - (cos.SharesQuantity * cos.BoughtAt);
+                cos.WinLoss = (float)price;
             }
           
             return View(await _context.StockPurchase.Where(s => s.UserName == userName)
@@ -68,9 +68,6 @@ namespace StockScreener.Controllers.Stock
             return View();
         }
 
-        // POST: StockPurchases/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BoughtAt,StockIndex,SharesQuantity,UserName")] StockPurchase stockPurchase)
@@ -108,9 +105,6 @@ namespace StockScreener.Controllers.Stock
             return View(stockPurchase);
         }
 
-        // POST: StockPurchases/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BoughtAt,StockIndex,SharesQuantity,UserName")] StockPurchase stockPurchase)

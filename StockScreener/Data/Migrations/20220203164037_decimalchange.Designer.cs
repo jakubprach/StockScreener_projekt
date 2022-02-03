@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockScreener.Data;
 
 namespace StockScreener.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220203164037_decimalchange")]
+    partial class decimalchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,11 +228,11 @@ namespace StockScreener.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("BoughtAt")
-                        .HasColumnType("real");
+                    b.Property<decimal>("BoughtAt")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<float>("SharesQuantity")
-                        .HasColumnType("real");
+                    b.Property<decimal>("SharesQuantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("StockIndex")
                         .HasColumnType("nvarchar(max)");
@@ -238,8 +240,8 @@ namespace StockScreener.Data.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("WinLoss")
-                        .HasColumnType("real");
+                    b.Property<decimal>("WinLoss")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
