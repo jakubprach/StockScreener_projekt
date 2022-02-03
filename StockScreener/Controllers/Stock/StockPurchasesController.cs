@@ -30,6 +30,10 @@ namespace StockScreener.Controllers.Stock
         {
             return View();
         }
+        public IActionResult InputError()
+        {
+            return View();
+        }
 
         // GET: StockPurchases
         public async Task<IActionResult> Index()
@@ -40,8 +44,8 @@ namespace StockScreener.Controllers.Stock
             {
                 var securities = await Yahoo.Symbols(cos.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
                 var stock = securities[cos.StockIndex];
-                var price = (stock[Field.RegularMarketPrice] * cos.SharesQuantity) - (cos.SharesQuantity * cos.BoughtAt);
-                cos.WinLoss = (float)price;
+                var price = Math.Round((stock[Field.RegularMarketPrice] * cos.SharesQuantity) - (cos.SharesQuantity * cos.BoughtAt),2);
+                cos.WinLoss = price;
             }
           
             return View(await _context.StockPurchase.Where(s => s.UserName == userName)
@@ -82,7 +86,7 @@ namespace StockScreener.Controllers.Stock
                 var securities = await Yahoo.Symbols(stockPurchase.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
                 stockPurchase.UserName = userName;
                 stockPurchase.WinLoss = 0;
-                if (!TryValidateModel(stockPurchase)) { return RedirectToAction("NotLoggedIn"); }
+                if (!TryValidateModel(stockPurchase)) { return RedirectToAction("InputError"); }
 
                 if (securities.ContainsKey(stockPurchase.StockIndex))
                     {          
@@ -127,7 +131,7 @@ namespace StockScreener.Controllers.Stock
                 return NotFound();
             }
 
-            if (!TryValidateModel(stockPurchase)) { return RedirectToAction("NotLoggedIn"); }
+            if (!TryValidateModel(stockPurchase)) { return RedirectToAction("InputError"); }
             if (securities.ContainsKey(stockPurchase.StockIndex))
             {
                 try
