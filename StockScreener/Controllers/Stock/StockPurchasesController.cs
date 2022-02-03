@@ -120,13 +120,15 @@ namespace StockScreener.Controllers.Stock
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BoughtAt,StockIndex,SharesQuantity,UserName")] StockPurchase stockPurchase)
         {
+            var securities = await Yahoo.Symbols(stockPurchase.StockIndex).Fields(Field.Symbol, Field.RegularMarketPrice, Field.FiftyTwoWeekHigh).QueryAsync();
             string userName = HttpContext.User.Identity.Name;
             if (id != stockPurchase.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!TryValidateModel(stockPurchase)) { return RedirectToAction("NotLoggedIn"); }
+            if (securities.ContainsKey(stockPurchase.StockIndex))
             {
                 try
                 {
