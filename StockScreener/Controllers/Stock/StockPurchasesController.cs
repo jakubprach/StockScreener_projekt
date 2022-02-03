@@ -48,7 +48,6 @@ namespace StockScreener.Controllers.Stock
                                       .ToListAsync());
         }
 
-
         public async Task<IActionResult> Details(int? id)
         {
             if (!User.Identity.IsAuthenticated) { return RedirectToAction("NotLoggedIn"); }
@@ -121,6 +120,7 @@ namespace StockScreener.Controllers.Stock
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BoughtAt,StockIndex,SharesQuantity,UserName")] StockPurchase stockPurchase)
         {
+            string userName = HttpContext.User.Identity.Name;
             if (id != stockPurchase.Id)
             {
                 return NotFound();
@@ -130,6 +130,7 @@ namespace StockScreener.Controllers.Stock
             {
                 try
                 {
+                    stockPurchase.UserName = userName;
                     _context.Update(stockPurchase);
                     await _context.SaveChangesAsync();
                 }
